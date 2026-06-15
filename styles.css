@@ -1,3 +1,10 @@
+/* Created with Gemini Guided Learning */
+
+* {
+    border: 1px red dotted ;
+    padding: 5px;
+}
+
 /* 1. THE BIG CONTAINER: Fixes the spacing for the entire block */
 .breadcrumb {
     list-style: none; 
@@ -27,4 +34,10 @@
 .breadcrumb a:hover {
     color: #0066cc; /* Changes text to a nice blue on hover */
     text-decoration: underline; /* Brings the underline back ONLY on hover */
+}
+
+/* Step 5: Target the active page using its HTML attribute */
+.breadcrumb li[aria-current="page"] {
+    color: #777777; /* A lighter, muted grey */
+    font-weight: bold; /* Optional: adds emphasis to the current spot */
 }

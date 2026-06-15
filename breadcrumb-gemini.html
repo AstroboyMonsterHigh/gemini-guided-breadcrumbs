@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review: Mastering CSS Breadcrumbs</title>
+    <style>
+        :root {
+            --bg-primary: #1e1e2e;
+            --bg-secondary: #252538;
+            --text-main: #cdd6f4;
+            --text-muted: #a6adc8;
+            --accent: #89b4fa;
+            --accent-green: #a6e3a1;
+            --accent-orange: #fab387;
+            --border: #45475a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 { color: var(--accent); margin-bottom: 5px; }
+        h2 { color: var(--accent-green); margin-top: 30px; border-left: 4px solid var(--accent-green); padding-left: 10px; }
+        
+        .interactive-sandbox {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        /* Live Sandbox Component Styling */
+        nav[aria-label="Breadcrumb"] {
+            background: #11111b;
+            padding: 12px 20px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            display: inline-block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .breadcrumb {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .breadcrumb li {
+            display: inline-block;
+        }
+
+        .breadcrumb li:not(:first-child)::before {
+            content: "/";
+            padding: 0 8px;
+            color: #6c7086;
+        }
+
+        .breadcrumb a {
+            text-decoration: none;
+            color: var(--accent);
+            transition: color 0.2s, text-decoration 0.2s;
+        }
+
+        .breadcrumb a:hover {
+            color: #b4befe;
+            text-decoration: underline;
+        }
+
+        .breadcrumb li[aria-current="page"] {
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+
+        /* Quiz / Interaction Styling */
+        .card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: var(--border);
+            color: var(--text-main);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .reveal-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #181825;
+            border-left: 3px solid var(--accent-orange);
+            border-radius: 4px;
+        }
+
+        code {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            background-color: #11111b;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--accent-orange);
+        }
+
+        pre {
+            background-color: #11111b;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+        }
+
+        pre code { color: var(--text-main); background: none; padding: 0; }
+
+        .security-insight {
+            border-left: 4px solid var(--accent-orange);
+            background: #2a242d;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+
+        .security-insight h4 {
+            margin: 0 0 5px 0;
+            color: var(--accent-orange);
+        }
+    </style>
+    <script>
+        function toggleVisibility(id) {
+            var element = document.getElementById(id);
+            if (element.style.display === "block") {
+                element.style.display = "none";
+            } else {
+                element.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Breadcrumb Layout Review</h1>
+        <p>Gemini Guided Learning Companion Laboratory</p>
+    </header>
+
+    <h2>1. Live Working Render</h2>
+    <p>Below is the live component rendering your final layout code. Interact with it directly to view the hover states and the structural alignment we built:</p>
+    
+    <div class="interactive-sandbox">
+        <nav aria-label="Breadcrumb">
+            <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Electronics</a></li>
+                <li><a href="#">Computers</a></li>
+                <li><a href="#">Laptops</a></li>
+                <li aria-current="page">Accessories</li>
+            </ol>
+        </nav>
+    </div>
+
+    <h2>2. Interactive Knowledge Verification</h2>
+    
+    <div class="card">
+        <h3>Concept 1: Core Layout Mechanics</h3>
+        <p>Why did applying <code>display: inline-block</code> to the parent container <code>.breadcrumb</code> fail to line the links up horizontally, whereas applying it to <code>.breadcrumb li</code> worked instantly?</p>
+        <button onclick="toggleVisibility('ans1')">Reveal Architectural Solution</button>
+        <div id="ans1" class="reveal-box">
+            Applying styles to the parent container modifications behaves on the entire wrapper boundary relative to the webpage layout. The child list items (<code>&lt;li&gt;</code>) inherently maintain their user-agent default <code>display: list-item</code> properties. To alter block stacking, you must explicitly target the concrete child elements occupying structural lines.
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Concept 2: The Stubborn Anchor Underline</h3>
+        <p>Why does targeting the <code>li</code> text decoration properties fail to remove browser link colors and lines?</p>
+        <button onclick="toggleVisibility('ans2')">Reveal Target Mechanism</button>
+        <div id="ans2" class="reveal-box">
+            The standard browser user-agent stylesheet injects explicit, prioritized decoration guidelines directly onto the <code>&lt;a&gt;</code> tags. Because native default styles on anchor tags resist implicit inherited values from broad container targets, you must pass structural adjustments directly to the <code>.breadcrumb a</code> selector explicitly.
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Concept 3: Dynamic Attribute Selectors</h3>
+        <p>Explain how <code>li[aria-current="page"]</code> isolates the active user page from general history items without manually modifying structural CSS class names.</p>
+        <button onclick="toggleVisibility('ans3')">Reveal Selector Analysis</button>
+        <div id="ans3" class="reveal-box">
+            The syntax leverages CSS Attribute Selection. By mapping targeted designs directly to DOM properties (<code>aria-current</code>), styles update dynamically alongside accessibility indicators. This decouples formatting logic from custom class boilerplate.
+        </div>
+    </div>
+
+    <h2>3. Production Style Blueprints</h2>
+    <p>Review the comprehensive stylesheet implementation built throughout our guided lesson:</p>
+    <pre><code>/* 1. Global Reset Constraints */
+.breadcrumb {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* 2. Horizontal Flow Vector */
+.breadcrumb li {
+    display: inline-block;
+}
+
+/* 3. Non-Destructive Separation Injection */
+.breadcrumb li:not(:first-child)::before {
+    content: "/";
+    padding: 0 8px;
+    color: #ccc;
+}
+
+/* 4. Anchor State Controls */
+.breadcrumb a {
+    text-decoration: none;
+    color: #333;
+}
+
+.breadcrumb a:hover {
+    color: #0066cc;
+    text-decoration: underline;
+}
+
+/* 5. Static Context Delineation */
+.breadcrumb li[aria-current="page"] {
+    color: #777777;
+    font-weight: bold;
+}</code></pre>
+
+    <div class="security-insight">
+        <h4>🚨 Human Firewall Notification</h4>
+        <p><strong>Code Base Maintenance:</strong> Precise layout scoping shrinks your functional software attack surface. Throwing overly permissive formatting at structural wrappers breeds technical layout debt, rendering security banners or defensive notifications vulnerable to invisible overlap or structural layout shifting on mobile interfaces.</p>
+    </div>
+</div>
+
+</body>
+</html>
