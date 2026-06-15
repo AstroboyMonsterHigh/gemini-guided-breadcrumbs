@@ -1,18 +1,30 @@
+/* 1. THE BIG CONTAINER: Fixes the spacing for the entire block */
 .breadcrumb {
-    list-style: none; /* Explicit safety reset */
+    list-style: none; 
     padding: 0;
     margin: 0;
 }
 
-/* Step 1: Make the list items sit in a horizontal row */
+/* 2. THE STRUCTURAL ROWS: Lines up the individual list boxes side-by-side */
 .breadcrumb li {
     display: inline-block;
 }
 
-/* Step 2: Add the separators between them */
+/* 3. THE DECORATIVE SEPARATORS: Injects the slashes between those list boxes */
 .breadcrumb li:not(:first-child)::before {
     content: "/";
     padding: 0 8px;
     color: #ccc;
+}
+
+/* 4. THE INTERACTIVE TEXT: Overrides the stubborn browser styles on the links */
+.breadcrumb a {
     text-decoration: none;
+    color: #333;
+}
+
+/* YOUR NEXT CSS ADDITION */
+.breadcrumb a:hover {
+    color: #0066cc; /* Changes text to a nice blue on hover */
+    text-decoration: underline; /* Brings the underline back ONLY on hover */
 }
