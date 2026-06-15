@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>CSS Breadcrumb Navigation | Modern & Responsive</title>
+    <meta name="description" content="A clean, accessible, and fully responsive breadcrumb trail built with modern CSS flexbox and custom properties.">
+    <style>
+        /* ----- CSS RESET & GLOBAL STYLES ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #e9f0f5 0%, #f1f7fc 100%);
+            font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1.5rem;
+        }
+
+        /* main card container to showcase breadcrumb in context */
+        .demo-container {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(255,255,255,0.65);
+            backdrop-filter: blur(2px);
+            border-radius: 2.5rem;
+            padding: 2rem 1.8rem 2.5rem 1.8rem;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.2), 0 2px 5px rgba(0,0,0,0.02);
+            transition: all 0.2s ease;
+        }
+
+        /* page header */
+        .page-header {
+            margin-bottom: 2rem;
+            border-left: 5px solid #2c7da0;
+            padding-left: 1.2rem;
+        }
+        .page-header h1 {
+            font-weight: 600;
+            font-size: 1.9rem;
+            letter-spacing: -0.3px;
+            color: #1e3e4a;
+        }
+        .page-header p {
+            color: #2c5f6e;
+            margin-top: 0.35rem;
+            font-weight: 450;
+        }
+
+        /* section styling for different breadcrumb examples */
+        .section {
+            background: white;
+            border-radius: 2rem;
+            padding: 1.6rem 1.8rem;
+            margin-bottom: 2.2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 4px rgba(0,0,0,0.05);
+            transition: box-shadow 0.2s;
+        }
+        .section:hover {
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 550;
+            color: #1f5062;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 2px solid #e2edf2;
+            padding-bottom: 0.6rem;
+        }
+        .section-title span {
+            background: #d9eaf1;
+            padding: 0.2rem 0.7rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #1f6e8a;
+        }
+
+        /* ----- BASE BREADCRUMB STYLES (CORE COMPONENT) ----- */
+        .breadcrumb {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 0.35rem;
+            font-size: 0.95rem;
+        }
+
+        /* breadcrumb items */
+        .breadcrumb-item {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* links */
+        .breadcrumb-item a {
+            text-decoration: none;
+            color: #2c7da0;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            background: transparent;
+            padding: 0.3rem 0.2rem;
+            border-radius: 30px;
+        }
+        .breadcrumb-item a:hover {
+            color: #134b5e;
+            background-color: #eef5f9;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        /* current / active page (non-link) */
+        .breadcrumb-item.active {
+            color: #2d3e45;
+            font-weight: 550;
+            background: #ecf3f7;
+            padding: 0.3rem 0.9rem;
+            border-radius: 40px;
+            letter-spacing: -0.2px;
+            font-size: 0.95rem;
+            pointer-events: none;
+        }
+
+        /* separator between items */
+        .breadcrumb-separator {
+            margin: 0 0.3rem;
+            color: #8aaebd;
+            font-weight: 400;
+            font-size: 1.1rem;
+            user-select: none;
+            line-height: 1;
+        }
+
+        /* responsive adjustments: on small screens, reduce gap and font-size */
+        @media (max-width: 560px) {
+            .breadcrumb {
+                gap: 0.2rem;
+                font-size: 0.85rem;
+            }
+            .breadcrumb-separator {
+                margin: 0 0.2rem;
+                font-size: 1rem;
+            }
+            .breadcrumb-item.active {
+                padding: 0.2rem 0.7rem;
+            }
+            .section {
+                padding: 1.2rem;
+            }
+            .demo-container {
+                padding: 1rem;
+            }
+        }
+
+        /* ----- VARIANT 1: WITH CUSTOM ARROW ICONS (CSS pseudo-element / modern) ----- */
+        .breadcrumb-arrow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .breadcrumb-arrow .crumb {
+            display: inline-flex;
+            align-items: center;
+        }
+        .breadcrumb-arrow .crumb a {
+            text-decoration: none;
+            color: #2c7da0;
+            font-weight: 500;
+            padding: 0.3rem 0.2rem;
+            transition: 0.2s;
+        }
+        .breadcrumb-arrow .crumb a:hover {
+            color: #0f4c5e;
+            background: #e2f0f5;
+            border-radius: 24px;
+        }
+        /* separator using pseudo-element ::before for nicer arrows (except first child) */
+        .breadcrumb-arrow .crumb:not(:first-child)::before {
+            content: "›";
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-right: 0.55rem;
+            margin-left: 0.2rem;
+            color: #86aebd;
+            display: inline-block;
+            line-height: 1;
+        }
+        .breadcrumb-arrow .crumb.active {
+            color: #2d3e45;
+            font-weight: 550;
+            background: #e4f0f5;
+            padding: 0.3rem 0.9rem;
+            border-radius: 40px;
+        }
+        .breadcrumb-arrow .crumb.active::before {
+            color: #86aebd;
+        }
+
+        /* ----- VARIANT 2: SLASH STYLED BREADCRUMB (minimal) ----- */
+        .breadcrumb-slash {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            list-style: none;
+            gap: 0.25rem;
+        }
+        .breadcrumb-slash li {
+            display: inline-flex;
+            align-items: center;
+        }
+        .breadcrumb-slash a {
+            text-decoration: none;
+            color: #3c7a8c;
+            font-weight: 470;
+            transition: 0.2s;
+            padding: 0.25rem 0.15rem;
+        }
+        .breadcrumb-slash a:hover {
+            color: #124c5e;
+            border-bottom: 1px solid #9dc6d6;
+        }
+        .slash-sep {
+            margin: 0 0.4rem;
+            color: #aac3ce;
+            font-weight: 400;
+            font-size: 1rem;
+        }
+        .breadcrumb-slash .current {
+            color: #264e5c;
+            font-weight: 550;
+            background: #e9f3f8;
+            padding: 0.25rem 0.8rem;
+            border-radius: 30px;
+        }
+
+        /* ----- VARIANT 3: BORDERED & PILLS (advanced interactive) ----- */
+        .breadcrumb-pill {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            list-style: none;
+            gap: 0.15rem;
+        }
+        .breadcrumb-pill .pill-item {
+            display: inline-flex;
+            align-items: center;
+        }
+        .breadcrumb-pill .pill-item a {
+            text-decoration: none;
+            background: #f2f8fb;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            color: #1a6b85;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            border: 1px solid #d3e4ec;
+        }
+        .breadcrumb-pill .pill-item a:hover {
+            background: #e2f0f7;
+            border-color: #b7d3e0;
+            color: #0e4b60;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.03);
+        }
+        .breadcrumb-pill .pill-sep {
+            margin: 0 0.2rem;
+            font-size: 1rem;
+            color: #9dbecd;
+            font-weight: 300;
+        }
+        .breadcrumb-pill .pill-item.active-pill {
+            background: #2c7da0;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border: none;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        /* demo specific additional spacing */
+        hr {
+            margin: 1.5rem 0 0.8rem;
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, #cde3ec, transparent);
+        }
+        .note {
+            font-size: 0.8rem;
+            color: #557c8a;
+            text-align: center;
+            margin-top: 1.5rem;
+            background: #eef4f8;
+            padding: 0.7rem 1rem;
+            border-radius: 60px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .flex-row-example {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+        @media (max-width: 760px) {
+            .flex-row-example {
+                flex-direction: column;
+                gap: 1.8rem;
+            }
+        }
+        footer {
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #5f8596;
+        }
+    </style>
+</head>
+<body>
+<div class="demo-container">
+    <div class="page-header">
+        <h1>🍞 CSS Breadcrumb Navigation</h1>
+        <p>Clean, accessible, fully responsive breadcrumb trails — perfect for hierarchy & UX</p>
+    </div>
+
+    <!-- CLASSIC BREADCRUMB (standard separators) -->
+    <div class="section">
+        <div class="section-title">
+            📍 Classic style · chevron separators
+            <span>flexible & semantic</span>
+        </div>
+        <nav aria-label="Breadcrumb" class="breadcrumb-wrapper">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><span class="breadcrumb-separator">›</span><a href="#">Products</a></li>
+                <li class="breadcrumb-item"><span class="breadcrumb-separator">›</span><a href="#">Electronics</a></li>
+                <li class="breadcrumb-item"><span class="breadcrumb-separator">›</span><a href="#">Laptops</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Gaming Laptops</li>
+            </ol>
+        </nav>
+        <div class="note" style="margin-top: 1rem; background: transparent; text-align: left; padding-left:0;">
+            💡 <strong>Accessibility:</strong> uses <code>aria-label="Breadcrumb"</code> and <code>aria-current="page"</code>.
+        </div>
+    </div>
+
+    <!-- MODERN ARROW STYLED (pseudo-element) -->
+    <div class="section">
+        <div class="section-title">
+            🎯 Arrow-driven · pseudo-element separator
+            <span>modern & lightweight</span>
+        </div>
+        <nav aria-label="Breadcrumb arrows">
+            <ol class="breadcrumb-arrow">
+                <li class="crumb"><a href="#">Dashboard</a></li>
+                <li class="crumb"><a href="#">Settings</a></li>
+                <li class="crumb"><a href="#">Account</a></li>
+                <li class="crumb"><a href="#">Security</a></li>
+                <li class="crumb active" aria-current="page">Two-factor Auth</li>
+            </ol>
+        </nav>
+        <div style="font-size:0.8rem; color:#55818e; margin-top: 0.8rem;">
+            ✨ Arrow generated via <code>::before</code> pseudo-element, no extra markup needed.
+        </div>
+    </div>
+
+    <!-- SLASH STYLE (minimalist) -->
+    <div class="section">
+        <div class="section-title">
+            ➕ Slash minimalist style
+            <span>clean & editorial</span>
+        </div>
+        <nav aria-label="Slash breadcrumb">
+            <ol class="breadcrumb-slash">
+                <li><a href="#">Library</a></li>
+                <li><span class="slash-sep">/</span><a href="#">Documents</a></li>
+                <li><span class="slash-sep">/</span><a href="#">Projects</a></li>
+                <li><span class="slash-sep">/</span><a href="#">2025</a></li>
+                <li><span class="slash-sep">/</span><span class="current" aria-current="page">Final_report.pdf</span></li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- PILL / BORDERED BREADCRUMB (interactive, modern) -->
+    <div class="section">
+        <div class="section-title">
+            💊 Pill & bordered design
+            <span>card-like & interactive</span>
+        </div>
+        <nav aria-label="Pill style breadcrumb">
+            <ol class="breadcrumb-pill">
+                <li class="pill-item"><a href="#">Home</a></li>
+                <li class="pill-sep">→</li>
+                <li class="pill-item"><a href="#">Collections</a></li>
+                <li class="pill-sep">→</li>
+                <li class="pill-item"><a href="#">Men's Fashion</a></li>
+                <li class="pill-sep">→</li>
+                <li class="pill-item"><a href="#">Jackets</a></li>
+                <li class="pill-sep">→</li>
+                <li class="pill-item active-pill" aria-current="page">Winter Coats</li>
+            </ol>
+        </nav>
+        <div class="flex-row-example" style="margin-top: 1.2rem; align-items: center; justify-content: space-between;">
+            <div style="font-size: 0.85rem;">✨ Rounded containers with hover elevation</div>
+            <div style="font-size: 0.7rem; background:#f0f6fa; padding:0.2rem 0.6rem; border-radius:50px;">→ accessible arrows</div>
+        </div>
+    </div>
+
+    <!-- ADVANCED DEMO: fully responsive + dynamic truncation concept (using flex wrap) -->
+    <div class="section">
+        <div class="section-title">
+            🌐 Deep hierarchy example (e‑commerce)
+            <span>long path, responsive</span>
+        </div>
+        <nav aria-label="Deep page breadcrumb">
+            <ol class="breadcrumb" style="gap: 0.3rem;">
+                <li class="breadcrumb-item"><a href="#">www.shopdemo.com</a></li>
+                <li class="breadcrumb-item"><span class="breadcrumb-separator">›</span><a href="#">Electronics</a></li>
+                <li class="breadcrumb-item"><span class="breadcrumb-separator">›</span><a href="#">Computers & Tablets</a></li>
+                <li class="breadcrumb-item"><span class="breadcrumb-separator">›</span><a href="#">Laptops</a></li>
+                <li class="breadcrumb-item"><span class="breadcrumb-separator">›</span><a href="#">Ultrabooks</a></li>
+                <li class="breadcrumb-item"><span class="breadcrumb-separator">›</span><a href="#">Intel Core Ultra</a></li>
+                <li class="breadcrumb-item active" aria-current="page">ASUS Zenbook 14 OLED</li>
+            </ol>
+        </nav>
+        <div class="note" style="margin-top: 1rem;">
+            🧩 On smaller screens, the breadcrumb automatically wraps into multiple lines — improves readability on mobile.
+        </div>
+    </div>
+
+    <!-- Interactive Micro example: shows current active path using JS optional? just static but complete -->
+    <div class="section" style="background: linear-gradient(115deg, #ffffff, #fefefe);">
+        <div class="section-title">
+            🧭 Additional variant: icon + text (optional)
+            <span>elevated visual</span>
+        </div>
+        <nav aria-label="Home icon breadcrumb">
+            <ol class="breadcrumb" style="align-items: center;">
+                <li class="breadcrumb-item"><a href="#" style="display: inline-flex; align-items: center; gap: 4px;">🏠 Home</a></li>
+                <li class="breadcrumb-item"><span class="breadcrumb-separator">›</span><a href="#">Catalog</a></li>
+                <li class="breadcrumb-item"><span class="breadcrumb-separator">›</span><a href="#">Living Room</a></li>
+                <li class="breadcrumb-item"><span class="breadcrumb-separator">›</span><a href="#">Sofas</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Sectional Sofas</li>
+            </ol>
+        </nav>
+        <hr>
+        <div style="display: flex; justify-content: flex-start; gap: 2rem; flex-wrap: wrap; margin-top: 0.8rem;">
+            <div style="font-size:0.8rem;">✅ <strong>CSS only</strong> — no JavaScript, pure flex & custom properties</div>
+            <div style="font-size:0.8rem;">🎨 <strong>Global theming</strong> ready: change <code>--breadcrumb-color</code> if needed</div>
+        </div>
+    </div>
+
+    <footer>
+        ⚡ Breadcrumb navigation | Fully responsive | WCAG friendly | Uses semantic HTML (ol/li) + aria attributes
+    </footer>
+</div>
+
+<!-- Additional note: we are not using external libraries. All CSS internal -->
+</body>
+</html>
