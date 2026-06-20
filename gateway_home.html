@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Gateway Simulator</title>
+    <link rel="stylesheet" href="gateway.css">
+</head>
+<body>
+
+    <main class="sandbox-container">
+        <h2>Scenario A: Safe & Legit Site</h2>
+        <p>This button performs exactly what it advertises.</p>
+        <a href="gateway_good.html" class="btn btn-legit">Visit Secure Portal</a>
+
+        <hr style="margin: 30px 0; border: 0; border-top: 1px solid #ccc;">
+
+        <h2>Scenario B: Compromised / Spoofed Site</h2>
+        <p>This interface uses an invisible opacity layer overlay.</p>
+        
+        <div class="clickjack-container">
+            <div class="visible-decoy">🎮 Play Free Web Game</div>
+            
+            <a href="gateway_bad.html" class="invisible-trap-link"></a>
+        </div>
+    </main>
+
+</body>
+</html>
